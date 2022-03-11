@@ -157,7 +157,89 @@ erDiagram
     QUIZ ||--|{ USERQUIZLIST : quizId
     QUIZ ||--|{ QUESTTION : quizId 
 ``` 
+ 
+### Connection to DB
+ **Connection was created only to show how DB can be connected to Androi App, it should not be used in comercial becouse of security problem**
+if you whant secure your app pleas use server with RestAPI
 
+<details><summary>Connection to DB</summary>
+<p>  
+ Before you will add this code need add mysql-connector-java-5.1.20-bin.jar to your lib folder (app/libs/mysql-connector-java-5.1.20-bin.jar)
+ Download only version 5.1.20 from site [downloads.mysql.com archives](https://downloads.mysql.com/archives/c-j/)
+
+ In **url** enter server in format "jdbc:mysql://[DB Server]/[DB Name]"
+ If you run on local PC your DB Server should be your PC IP, it will be also work if PC in same network where android device 
+ 
+ In **username** enter DB User with access from all IP (values '%' or '0:0:0:0')
+ 
+```
+    private static final String LOG = "DEBUG";
+    private static String classjdbcDriver = "net.sourceforge.jtds.jdbc.Driver";
+
+    private static String url = "jdbc:mysql://192.168.1.20/android_quiz";
+    private static String username = "java";
+    private static String password = "password";
+    String res = "";
+    private static Connection connection() {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver"); // Add DB Driver to program
+            System.out.println("Driver loaded!");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Database connected!");
+            return connection;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+    }
+```
+ 
+</p>
+</details>
+
+### SQL Requests
+<details><summary>Select Request</summary>
+<p>
+
+```
+    public static User LogIn( String login, String password){
+
+        try{
+            Connection con = connection(); //Get DB Connection 
+            String sql;
+            sql  = "SELECT Id,Name FROM users WHERE Name =? And Password = ?"; // '?' places for parameters
+            PreparedStatement prest = con.prepareStatement(sql);
+            prest.setString(1,login);
+            prest.setString(2,password);
+            User result = new User();
+            ResultSet rs = prest.executeQuery(); 
+            if (rs.next()){
+                result.Id = rs.getInt("Id");
+                result.Login = rs.getString("Name");
+
+                System.out.println(result.Id + "\t" + "- " + result.Login);
+
+            }
+            prest.close(); // important to close reader
+            con.close();// important to close connections
+            return result;
+        }
+        catch (SQLException s){
+            System.out.println("SQL statement is not executed!");
+            System.out.println(s.getMessage());
+
+        }
+
+        return null;
+    }
+
+```
+ 
+</p>
+</details>
+ 
 ## Related
 
 Here are some related projects
