@@ -24,8 +24,8 @@ Project is created with:
   
 ## Roadmap
 
-* [ ] DB Connecting
-* [ ] Login/Registration System
+* [X] DB Connecting
+* [X] Login/Registration System
 * [ ] Quiz Menu
 * [ ] Create Quiz System 
 * [ ] Quiz part
