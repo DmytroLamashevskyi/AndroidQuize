@@ -34,12 +34,25 @@ public class MainActivity extends AppCompatActivity {
         clickButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = DataBaseManager.LogIn(loginText.getText().toString(),passwordText.getText().toString());
-                if (user != null) {
 
-                    TextView logText = (TextView ) findViewById(R.id.ErrorLoginText);
-                    logText.setText(String.valueOf(user.Id));
+                TextView logText = (TextView ) findViewById(R.id.ErrorLoginText);
+
+                User user = null;
+                if(DataBaseManager.isUserRegistered(loginText.getText().toString()))
+                {
+                    user =  DataBaseManager.LogIn(loginText.getText().toString(),passwordText.getText().toString());
+
+                    if (user != null) {
+                        logText.setText("This user already exist, wrong password");
+                        return;
+                    }
+                }else{
+                    DataBaseManager.register(loginText.getText().toString(),passwordText.getText().toString());
+                    user = DataBaseManager.LogIn(loginText.getText().toString(),passwordText.getText().toString());
+                    logText.setText("User " + user.Id +"|"+user.Login +" created successfully");
                 }
+
+
             }
         });
     }

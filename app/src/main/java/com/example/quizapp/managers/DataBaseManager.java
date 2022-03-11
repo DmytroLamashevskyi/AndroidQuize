@@ -40,9 +40,10 @@ public class DataBaseManager {
     }
 
     public static User LogIn( String login, String password){
-        Connection con = connection();
-        User result = new User();
+
         try{
+            Connection con = connection();
+            User result = new User();
             String sql;
             sql  = "SELECT Id,Name FROM users WHERE Name =? And Password = ?";
             PreparedStatement prest = con.prepareStatement(sql);
@@ -71,23 +72,51 @@ public class DataBaseManager {
     }
 
 
-    public static boolean register(User user){
+    public static boolean register(String login, String password){
 
         String sql = "insert into users(Name,Password) values (?,?)";
-        Connection  con = connection();
 
         try {
+            Connection  con = connection();
+
             PreparedStatement pst=con.prepareStatement(sql);
 
-            pst.setString(1, user.Login);
-            pst.setString(2, user.Password);
+            pst.setString(1, login);
+            pst.setString(2, password);
 
             int value = pst.executeUpdate();
 
             con.close();
             if(value>0){
+                System.out.println(login + " was created successfully.");
                 return true;
             }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            return false;
+        }
+    }
+
+
+    public static boolean isUserRegistered(String login){
+
+        String sql = "SELECT Id,Name FROM users WHERE Name =? ";
+
+        try {
+            Connection  con = connection();
+            PreparedStatement pst=con.prepareStatement(sql);
+
+            pst.setString(1, login);
+
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()){
+                System.out.println( rs.getInt("Id") + "|" + rs.getString("Name")+ "\t" + "- Already exist");
+                return true;
+            }
+            pst.close();
+            con.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
