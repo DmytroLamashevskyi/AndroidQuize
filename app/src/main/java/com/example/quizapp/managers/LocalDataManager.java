@@ -21,6 +21,14 @@ public class LocalDataManager {
     }
 
     private User userData;
+    public void setUserData(User user){
+
+        userData = user;
+    }
+    public User getUserData(){
+
+        return userData;
+    }
 
     public static LocalDataManager getInstance()
     {
