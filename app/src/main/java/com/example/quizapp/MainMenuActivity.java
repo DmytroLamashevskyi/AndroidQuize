@@ -41,21 +41,22 @@ public class MainMenuActivity extends AppCompatActivity {
         quizListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(v.getContext(), QuizzesMenuActivity.class);
+                startActivity(intent);
             }
         });
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
 
         ratingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(v.getContext(), RatingQuizActivity.class);
+                startActivity(intent);
             }
         });
 

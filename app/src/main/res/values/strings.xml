@@ -13,4 +13,7 @@
     <string name="ratingString">Show Rating</string>
     <string name="settingsString">Settings</string>
     <string name="exitString">Exit</string>
+    <string name="createQuiz">Create</string>
+    <string name="myQuizzes">My Quizes</string>
+    <string name="allQuizzes">All Quizzes</string>
 </resources>
