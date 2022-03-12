@@ -2,6 +2,7 @@ package com.example.quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,9 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String USER_ID = "USER_ID";
+    public static final String USER_NAME = "USER_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +46,26 @@ public class MainActivity extends AppCompatActivity {
                 {
                     user =  DataBaseManager.LogIn(loginText.getText().toString(),passwordText.getText().toString());
 
-                    if (user != null) {
+
+                    if (user == null) {
                         logText.setText("This user already exist, wrong password");
                         return;
+                    }else{
+                        Intent intent = new Intent(v.getContext(), MainMenuActivity.class);
+                        intent.putExtra(USER_ID, user.Id);
+                        intent.putExtra(USER_NAME, user.Login);
+                        startActivity(intent);
                     }
+
                 }else{
                     DataBaseManager.register(loginText.getText().toString(),passwordText.getText().toString());
                     user = DataBaseManager.LogIn(loginText.getText().toString(),passwordText.getText().toString());
                     logText.setText("User " + user.Id +"|"+user.Login +" created successfully");
+
+                    Intent intent = new Intent(v.getContext(), MainMenuActivity.class);
+                    intent.getIntExtra(USER_ID, user.Id);
+                    intent.putExtra(USER_NAME, user.Login);
+                    startActivity(intent);
                 }
 
 

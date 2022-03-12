@@ -103,7 +103,7 @@ public class DataBaseManager {
     public static boolean isUserRegistered(String login){
 
         String sql = "SELECT Id,Name FROM users WHERE Name =? ";
-
+        boolean result = false;
         try {
             Connection  con = connection();
             PreparedStatement pst=con.prepareStatement(sql);
@@ -113,15 +113,17 @@ public class DataBaseManager {
             ResultSet rs = pst.executeQuery();
             if (rs.next()){
                 System.out.println( rs.getInt("Id") + "|" + rs.getString("Name")+ "\t" + "- Already exist");
-                return true;
+
+                pst.close();
+                con.close();
+                result = true;
             }
-            pst.close();
-            con.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            result = false;
         }finally {
-            return false;
+            return  result;
         }
     }
 
