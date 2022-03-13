@@ -17,4 +17,8 @@
     <string name="myQuizzes">My Quizes</string>
     <string name="allQuizzes">All Quizzes</string>
     <string name="quizStartImage">Start Image</string>
+    <string name="create_quiz">Create Quiz</string>
+    <string name="quiz_name_textholder">Quiz Name</string>
+    <string name="quiz_description_textholder">Description</string>
+    <string name="add_question_button">Add Question</string>
 </resources>

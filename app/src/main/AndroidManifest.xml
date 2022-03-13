@@ -11,21 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizApp">
-        <activity android:name=".QuizzesMenuActivity"
+        <activity android:name=".QuizCreateActivity"></activity>
+        <activity
+            android:name=".QuizzesMenuActivity"
             android:parentActivityName=".MainMenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainMenuActivity" />
         </activity>
-        <activity android:name=".RatingQuizActivity"
+        <activity
+            android:name=".RatingQuizActivity"
             android:parentActivityName=".MainMenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainMenuActivity" />
         </activity>
-
-        <activity android:name=".MainMenuActivity">
-        </activity>
+        <activity android:name=".MainMenuActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,4 +35,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

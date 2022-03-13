@@ -233,7 +233,7 @@ public class DataBaseManager {
 
     public static ArrayList<Quiz> GetAllQuizzes() {
         ArrayList<Quiz> quizzes = new ArrayList<>();
-        String sql = "SELECT * FROM quizzes LIMIT 20";
+        String sql = "SELECT * FROM quizzes WHERE IsDeleted=false LIMIT 20";
         System.out.println( "Try get all quizzes LIMIT 20");
 
         try {
@@ -266,7 +266,7 @@ public class DataBaseManager {
 
     public static ArrayList<Quiz> GetUserQuizzes(int userId) {
         ArrayList<Quiz> quizzes = new ArrayList<>();
-        String sql = "SELECT * FROM quizzes WHERE OwnerId = ? LIMIT 20";
+        String sql = "SELECT * FROM quizzes WHERE OwnerId = ? AND IsDeleted=false LIMIT 20";
 
         try {
             Connection  con = connection();
@@ -293,6 +293,69 @@ public class DataBaseManager {
         }finally {
             return  quizzes;
         }
+    }
+
+
+    /** Change DB Delete flag to true
+     * @param quizId quiz ID to delete
+     * @return Is deleted successfully = true
+     */
+    public static boolean deleteUserQuiz(int quizId){
+        String sql = "UPDATE quizzes SET IsDeleted = 1 WHERE quizzes.id = ?";
+        boolean result = false;
+        try {
+            Connection  con = connection();
+
+            PreparedStatement pst=con.prepareStatement(sql);
+            pst.setInt(1, quizId);
+
+            int value = pst.executeUpdate();
+
+            con.close();
+            if(value>0){
+                System.out.println(quizId + " was deleted successfully.");
+                return true;
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            return false;
+        }
+    }
+
+
+    /** Update DB Quiz with edited values
+     * @param quiz input data to Update (ID is important)
+     * @return Is updated successfully = true
+     */
+    public static boolean updateUserQuize(Quiz quiz){
+        boolean result = false;
+        String sql = "UPDATE quizzes SET Name = ?, Description = ? WHERE quizzes.id = ?";
+
+        try {
+            Connection  con = connection();
+
+            PreparedStatement pst=con.prepareStatement(sql);
+            pst.setString(1, quiz.name);
+            pst.setString(2, quiz.details);
+            pst.setInt(3, quiz.id);
+
+            int value = pst.executeUpdate();
+
+            con.close();
+            if(value>0){
+                System.out.println(quiz.id + "|"+ quiz.name + " was updated successfully.");
+                return true;
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            return false;
+        }
 
     }
+
+
 }
