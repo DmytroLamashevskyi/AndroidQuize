@@ -275,12 +275,18 @@ public class DataBaseManager {
             pst.setInt(1, userId);
 
             ResultSet rs = pst.executeQuery();
-            if (rs.next()){
-                System.out.println( rs.getInt("Id") + "|" + rs.getString("Name")+ "\t" + "- Already exist");
+            while (rs.next()){
+                Quiz temp = new Quiz();
+                temp.id = rs.getInt("Id");
+                temp.name =  rs.getString("Name");
+                temp.details =  rs.getString("Description");
+                temp.ownerId = rs.getInt("Id");
 
-                pst.close();
-                con.close();
+                System.out.println( temp.id  + "|" + rs.getString("Name")+ "|" + rs.getInt("OwnerId") + "\t" + " for User["+ userId +"]- was get from DB.");
+                quizzes.add(temp);
             }
+            pst.close();
+            con.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
