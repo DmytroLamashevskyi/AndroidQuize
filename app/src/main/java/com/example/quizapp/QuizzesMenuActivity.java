@@ -2,6 +2,7 @@ package com.example.quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -32,6 +33,7 @@ public class QuizzesMenuActivity extends AppCompatActivity {
 
         Button myQuizButton = (Button) findViewById(R.id.myQuizButton);
         Button allQuizzesButton = (Button) findViewById(R.id.allQuizzesButton);
+        Button createButton = (Button) findViewById(R.id.createButton);
 
         allQuizzesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +49,13 @@ public class QuizzesMenuActivity extends AppCompatActivity {
             }
         });
 
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), QuizCreateActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void AddQuizzesToLayout() {

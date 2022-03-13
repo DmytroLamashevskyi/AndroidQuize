@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LocalDataManager.getInstance().InitPref(getSharedPreferences("UserId", MODE_PRIVATE));
 
         Button clickButton = (Button) findViewById(R.id.SignInButton);
         EditText loginText = (EditText) findViewById(R.id.editTextPassword);
@@ -52,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }else{
                         Intent intent = new Intent(v.getContext(), MainMenuActivity.class);
-                        intent.putExtra(USER_ID, user.Id);
-                        intent.putExtra(USER_NAME, user.Login);
+                        LocalDataManager.getInstance().setUserData(user);
                         startActivity(intent);
                     }
 

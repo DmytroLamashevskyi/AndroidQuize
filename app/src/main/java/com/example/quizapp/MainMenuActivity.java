@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.quizapp.managers.LocalDataManager;
+
 public class MainMenuActivity extends AppCompatActivity {
 
     @Override
@@ -16,14 +18,11 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        Intent intent = getIntent();
-        int userId = intent.getIntExtra(MainActivity.USER_ID,0);
-        String userName = intent.getStringExtra(MainActivity.USER_NAME);
-
         TextView userNameView = (TextView) findViewById(R.id.userNameTextView);
         TextView userIdView = (TextView) findViewById(R.id.userIdTextView);
-        userNameView.setText(userName);
-        userIdView.setText("ID: " + userId);
+
+        userNameView.setText(LocalDataManager.getInstance().getUserData().Login);
+        userIdView.setText("ID: " + LocalDataManager.getInstance().getUserData().Id);
 
         Button exitButton = (Button) findViewById(R.id.exitButton);
         Button quizListButton = (Button) findViewById(R.id.quizListButton);
@@ -34,6 +33,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MainActivity.class);
+                LocalDataManager.getInstance().setUserData(null);
                 startActivity(intent);
             }
         });

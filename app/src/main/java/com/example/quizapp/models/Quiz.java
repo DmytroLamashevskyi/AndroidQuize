@@ -1,5 +1,6 @@
 package com.example.quizapp.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Quiz {
@@ -8,5 +9,8 @@ public class Quiz {
     public  String details;
     public int ownerId;
 
-    public List<Question> questions;
+    public Quiz(){
+        questions = new ArrayList<Question>();
+    }
+    public ArrayList<Question> questions;
 }

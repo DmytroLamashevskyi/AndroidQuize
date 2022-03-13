@@ -14,11 +14,14 @@
     <string name="settingsString">Settings</string>
     <string name="exitString">Exit</string>
     <string name="createQuiz">Create</string>
-    <string name="myQuizzes">My Quizes</string>
+    <string name="myQuizzes">My Quizzes</string>
     <string name="allQuizzes">All Quizzes</string>
     <string name="quizStartImage">Start Image</string>
     <string name="create_quiz">Create Quiz</string>
     <string name="quiz_name_textholder">Quiz Name</string>
     <string name="quiz_description_textholder">Description</string>
     <string name="add_question_button">Add Question</string>
+    <string name="IsAnswer">Is Answer</string>
+    <string name="EnterYourAnswer">Enter Your Answer</string>
+    <string name="enterYourQuestion">Enter your question</string>
 </resources>

@@ -13,23 +13,6 @@ public class LocalDataManager {
 
     }
 
-    private SharedPreferences sharedPref;
-    public  void  InitPref(SharedPreferences sharedPreferences){
-        SharedPreferences sharedPref = sharedPreferences;
-
-        String UserId = sharedPref.getString("UserId", null);
-    }
-
-    private User userData;
-    public void setUserData(User user){
-
-        userData = user;
-    }
-    public User getUserData(){
-
-        return userData;
-    }
-
     public static LocalDataManager getInstance()
     {
         if (_instance == null)
@@ -40,8 +23,12 @@ public class LocalDataManager {
     }
 
 
-    public void SaveData() {
+    private User userData;
+    public void setUserData(User user){
+        userData = user;
+    }
+    public User getUserData(){
 
-
+        return userData;
     }
 }
