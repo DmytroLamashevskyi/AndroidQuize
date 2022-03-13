@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -230,4 +231,62 @@ public class DataBaseManager {
         }
     }
 
+    public static ArrayList<Quiz> GetAllQuizzes() {
+        ArrayList<Quiz> quizzes = new ArrayList<>();
+        String sql = "SELECT * FROM quizzes LIMIT 20";
+        System.out.println( "Try get all quizzes LIMIT 20");
+
+        try {
+            Connection  con = connection();
+            PreparedStatement pst=con.prepareStatement(sql);
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()){
+                Quiz temp = new Quiz();
+                temp.id = rs.getInt("Id");
+                temp.name =  rs.getString("Name");
+                temp.details =  rs.getString("Description");
+                temp.ownerId = rs.getInt("Id");
+
+                System.out.println( temp.id  + "|" + rs.getString("Name")+ "|" + rs.getInt("OwnerId") + "\t" + "- was get from DB.");
+                quizzes.add(temp);
+            }
+            pst.close();
+            con.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            System.out.println( quizzes.size() + " quizzes was get from DB (MAX 20).");
+            return  quizzes;
+        }
+    }
+
+
+    public static ArrayList<Quiz> GetUserQuizzes(int userId) {
+        ArrayList<Quiz> quizzes = new ArrayList<>();
+        String sql = "SELECT * FROM quizzes WHERE OwnerId = ? LIMIT 20";
+
+        try {
+            Connection  con = connection();
+            PreparedStatement pst=con.prepareStatement(sql);
+
+            pst.setInt(1, userId);
+
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()){
+                System.out.println( rs.getInt("Id") + "|" + rs.getString("Name")+ "\t" + "- Already exist");
+
+                pst.close();
+                con.close();
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            return  quizzes;
+        }
+
+    }
 }

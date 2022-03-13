@@ -16,4 +16,5 @@
     <string name="createQuiz">Create</string>
     <string name="myQuizzes">My Quizes</string>
     <string name="allQuizzes">All Quizzes</string>
+    <string name="quizStartImage">Start Image</string>
 </resources>
