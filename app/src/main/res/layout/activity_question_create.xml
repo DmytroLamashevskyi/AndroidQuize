@@ -7,7 +7,7 @@
     tools:context=".QuestionCreateActivity">
 
     <EditText
-        android:id="@+id/editTextTextMultiLine2"
+        android:id="@+id/questionTextView"
         android:layout_width="361dp"
         android:layout_height="164dp"
         android:layout_marginTop="8dp"
@@ -24,65 +24,67 @@
         android:layout_width="374dp"
         android:layout_height="449dp"
         android:layout_marginTop="16dp"
+        android:checkedButton="@id/isAnswerOneRadioButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine2" >
+        app:layout_constraintTop_toBottomOf="@+id/questionTextView">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/isAnswerOneRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/IsAnswer" />
+
+        <EditText
+            android:id="@+id/answerOneTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/EnterYourAnswer"
+            android:inputType="textPersonName" />
+
+        <RadioButton
+            android:id="@+id/isAnswerTwoRadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/IsAnswer" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/answerTwoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/EnterYourAnswer" />
+            android:hint="@string/EnterYourAnswer"
+            android:inputType="textPersonName" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/isAnswerThreeRadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/IsAnswer" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/answerThreeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/EnterYourAnswer" />
+            android:hint="@string/EnterYourAnswer"
+            android:inputType="textPersonName" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/isAnswerFourRadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/IsAnswer" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName4"
+            android:id="@+id/answerFourTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/EnterYourAnswer"  />
-
-        <RadioButton
-            android:id="@+id/radioButton5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/IsAnswer" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/EnterYourAnswer" />
+            android:hint="@string/EnterYourAnswer"
+            android:inputType="textPersonName" />
 
     </RadioGroup>
 

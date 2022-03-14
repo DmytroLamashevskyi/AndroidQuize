@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.quizapp.managers.DataBaseManager;
+import com.example.quizapp.managers.LocalDataManager;
 import com.example.quizapp.models.Quiz;
 import com.example.quizapp.utiles.QuizListAdapter;
 import com.example.quizapp.utiles.UserQuizListAdapter;
@@ -52,8 +53,8 @@ public class QuizzesMenuActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), QuizCreateActivity.class);
-                startActivity(intent);
+                    Intent intent = new Intent(view.getContext(), QuizCreateActivity.class);
+                    startActivity(intent);
             }
         });
     }

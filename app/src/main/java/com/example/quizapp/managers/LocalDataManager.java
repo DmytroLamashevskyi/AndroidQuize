@@ -2,6 +2,7 @@ package com.example.quizapp.managers;
 
 import android.content.SharedPreferences;
 
+import com.example.quizapp.models.Quiz;
 import com.example.quizapp.models.User;
 
 public class LocalDataManager {
@@ -30,5 +31,13 @@ public class LocalDataManager {
     public User getUserData(){
 
         return userData;
+    }
+
+    private Quiz currentQuiz;
+    public Quiz getQuizData() {
+        return currentQuiz;
+    }
+    public void setQuiz(Quiz quiz){
+        currentQuiz = quiz;
     }
 }
