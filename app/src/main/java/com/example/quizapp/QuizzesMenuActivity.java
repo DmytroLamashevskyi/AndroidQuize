@@ -53,6 +53,7 @@ public class QuizzesMenuActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                    LocalDataManager.getInstance().setQuiz(new Quiz(LocalDataManager.getInstance().getUserData().Id));
                     Intent intent = new Intent(view.getContext(), QuizCreateActivity.class);
                     startActivity(intent);
             }

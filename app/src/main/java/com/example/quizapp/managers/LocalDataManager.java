@@ -35,6 +35,8 @@ public class LocalDataManager {
 
     private Quiz currentQuiz;
     public Quiz getQuizData() {
+        if(currentQuiz==null)
+            currentQuiz = new Quiz();
         return currentQuiz;
     }
     public void setQuiz(Quiz quiz){

@@ -122,6 +122,8 @@ public class DataBaseManager {
                 con.close();
                 result = true;
             }
+            pst.close();
+            con.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -135,6 +137,35 @@ public class DataBaseManager {
         if(quiz !=null){
             createQuiz(quiz.ownerId,quiz.name,quiz.details,quiz.questions);
         }
+    }
+
+    public static Quiz getLasCreated(int userId){
+        String sql = "SELECT * FROM quizzes WHERE ownerId= ? ORDER BY id DESC LIMIT 1";
+        Quiz result = new Quiz();
+        try {
+            Connection  con = connection();
+            PreparedStatement pst=con.prepareStatement(sql);
+
+            pst.setInt(1, userId);
+
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()){
+                result.ownerId = userId;
+                result.id = rs.getInt("Id");
+                result.name = rs.getString("Name");
+                result.details = rs.getString("Description");
+                System.out.println(result.id  + "|" + result.name  + "\t" + "- was selected");
+            }
+            pst.close();
+            con.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            return result;
+        }
+
+
     }
 
     public static String createQuiz(int ownerId, String name, String details, List<Question> questions){
@@ -156,7 +187,7 @@ public class DataBaseManager {
         }
 
         System.out.println("Start creating Quiz ownerId =" + ownerId +"\t| name = " + name);
-        String sql = "INSERT INTO quizzes ( Name, Description, OwnerId) VALUES ( ?,  ?, ?);";
+        String sql = "INSERT INTO quizzes ( Name, Description, OwnerId, IsDeleted) VALUES ( ?,  ?, ? , 0);";
 
         try {
             Connection  con = connection();
@@ -172,8 +203,10 @@ public class DataBaseManager {
                 System.out.println(message);
                 pst.close();
                 con.close();
+                int quizId =  getLasCreated(ownerId).id;
 
                 for (Question question: questions ) {
+                    question.quizId = quizId;
                     if(tryAddQuestion(question)){
                         message = "Question [" + question.question + "] was created successfully.";
                         System.out.println(message);

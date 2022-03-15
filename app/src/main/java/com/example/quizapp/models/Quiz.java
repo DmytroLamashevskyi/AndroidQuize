@@ -29,6 +29,13 @@ public class Quiz {
             throw new IllegalArgumentException();
     }
 
+    public void setName(String value){
+        name = value;
+    }
+    public void setDetails(String value){
+        details = value;
+    }
+
     public boolean isCorrect(){
         if(name == null || name.length() == 0){
             System.out.println("No name.");

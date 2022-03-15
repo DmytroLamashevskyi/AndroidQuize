@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.quizapp.managers.LocalDataManager;
 import com.example.quizapp.models.Question;
+import com.example.quizapp.models.Quiz;
 
 public class QuestionCreateActivity extends AppCompatActivity {
     private Question question;
@@ -58,8 +59,9 @@ public class QuestionCreateActivity extends AppCompatActivity {
 
 
                 if(question.isCorrect()){
-                    LocalDataManager.getInstance().getQuizData().addQuestion(question);
-
+                    Quiz quiz =  LocalDataManager.getInstance().getQuizData();
+                    quiz.addQuestion(question);
+                    LocalDataManager.getInstance().setQuiz(quiz);
                     Intent intent = new Intent(v.getContext(), QuizCreateActivity.class);
                     startActivity(intent);
                 }else {

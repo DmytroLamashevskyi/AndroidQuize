@@ -11,15 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizApp">
-        <activity android:name=".QuestionCreateActivity"></activity>
+        <activity android:name=".QuestionCreateActivity"
+            android:parentActivityName=".QuizCreateActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".QuizCreateActivity" />
+            > </activity>
         <activity
             android:name=".QuizCreateActivity"
             android:parentActivityName=".QuizzesMenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".QuizzesMenuActivity" />
-            >
-        </activity>
+            > </activity>
         <activity
             android:name=".QuizzesMenuActivity"
             android:parentActivityName=".MainMenuActivity">
