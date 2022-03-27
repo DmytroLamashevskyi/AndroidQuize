@@ -53,4 +53,8 @@ public class Quiz {
         System.out.println("Quiz is Correct.");
         return true;
     }
+
+    public void removeQuestion(Question question) {
+        questions.removeIf(q->q.id == question.id);
+    }
 }

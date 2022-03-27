@@ -28,10 +28,13 @@ public class Question {
         optionsArray =  gson.fromJson(json, new TypeToken<ArrayList<String>>(){}.getType());
     }
 
+    public ArrayList<String> getOptionsArray(){
+        if(optionsArray.size() ==0)
+            setOptionsFromJson(options);
+        return optionsArray;
+    }
+
     public boolean isCorrect() {
-
-
-
         return  true;
     }
 }

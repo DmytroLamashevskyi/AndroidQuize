@@ -24,4 +24,5 @@
     <string name="IsAnswer">Is Answer</string>
     <string name="EnterYourAnswer">Enter Your Answer</string>
     <string name="enterYourQuestion">Enter your question</string>
+    <string name="endTest">End Test</string>
 </resources>

@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.quizapp.R;
+import com.example.quizapp.managers.LocalDataManager;
 import com.example.quizapp.models.Question;
 import com.example.quizapp.models.Quiz;
 
@@ -16,8 +17,9 @@ import java.util.ArrayList;
 
 public class QuestionListAdapter extends ArrayAdapter<Question> {
 
-    public QuestionListAdapter(Context context, ArrayList<Question> questions) {
-        super(context, 0, questions);
+    private  Quiz quiz;
+    public QuestionListAdapter(Context context, Quiz quiz) {
+        super(context, 0, quiz.questions);
     }
 
     @Override
@@ -26,14 +28,22 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
         Question question = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.quiz_list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.question_list_item, parent, false);
         }
         // Lookup view for data population
-        TextView quizNameTextView = (TextView) convertView.findViewById(R.id.quizNameTextView);
-        ImageButton quizStartButton = (ImageButton) convertView.findViewById(R.id.quizStartButton);
+        TextView questionTextView = (TextView) convertView.findViewById(R.id.questionTextView);
+        ImageButton questionDeleteButton = (ImageButton) convertView.findViewById(R.id.questionDeleteButton);
+        ImageButton questionEditButton = (ImageButton) convertView.findViewById(R.id.questionEditButton);
+
         // Populate the data into the template view using the data object
-        quizNameTextView.setText(question.question);
-        quizStartButton.setOnClickListener(new View.OnClickListener() {
+        questionTextView.setText(question.question);
+        questionDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LocalDataManager.getInstance().getQuizData().removeQuestion(question);
+            }
+        });
+        questionEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

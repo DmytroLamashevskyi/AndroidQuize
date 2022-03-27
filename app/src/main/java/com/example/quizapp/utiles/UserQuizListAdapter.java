@@ -3,6 +3,7 @@ package com.example.quizapp.utiles;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.quizapp.QuizCreateActivity;
 import com.example.quizapp.R;
 import com.example.quizapp.managers.DataBaseManager;
+import com.example.quizapp.managers.LocalDataManager;
 import com.example.quizapp.models.Quiz;
 
 import java.util.ArrayList;
@@ -63,7 +66,9 @@ public class UserQuizListAdapter extends ArrayAdapter<Quiz> {
         quizEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                LocalDataManager.getInstance().setQuiz(DataBaseManager.GetQuizData(quiz.id));
+                Intent intent = new Intent(view.getContext(), QuizCreateActivity.class);
+                getContext().startActivity(intent);
             }
         });
 

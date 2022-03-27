@@ -13,7 +13,12 @@ import android.widget.ListView;
 
 import com.example.quizapp.managers.DataBaseManager;
 import com.example.quizapp.managers.LocalDataManager;
+import com.example.quizapp.models.Question;
 import com.example.quizapp.models.Quiz;
+import com.example.quizapp.utiles.QuestionListAdapter;
+import com.example.quizapp.utiles.QuizListAdapter;
+
+import java.util.ArrayList;
 
 public class QuizCreateActivity extends AppCompatActivity {
 
@@ -33,14 +38,18 @@ public class QuizCreateActivity extends AppCompatActivity {
         quiz = LocalDataManager.getInstance().getQuizData();
         quizName.setText(quiz.name);
         quizDetails.setText(quiz.details);
-
-        ListView quizList = (ListView)  findViewById(R.id.questListView);
+        AddQuestionsToLayout();
 
         createQuizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(LocalDataManager.getInstance().getQuizData().isCorrect()){
-                    DataBaseManager.createQuiz(quiz);
+                    if(quiz.id ==0){
+                        DataBaseManager.createQuiz(quiz);
+                    }else{
+                        DataBaseManager.updateUserQuize(quiz);
+                        DataBaseManager.updateQuizQuestions(quiz);
+                    }
 
                     Intent intent = new Intent(v.getContext(), QuizzesMenuActivity.class);
                     startActivity(intent);
@@ -70,5 +79,13 @@ public class QuizCreateActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void AddQuestionsToLayout() {
+        ListView questListView = (ListView)  findViewById(R.id.questListView);
+        // Create the adapter to convert the array to views
+        QuestionListAdapter questionsListAdapter = new QuestionListAdapter(this, quiz);
+        // Attach the adapter to a ListView
+        questListView.setAdapter(questionsListAdapter);
     }
 }

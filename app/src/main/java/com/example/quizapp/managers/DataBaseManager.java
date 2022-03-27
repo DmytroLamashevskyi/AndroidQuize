@@ -199,7 +199,7 @@ public class DataBaseManager {
 
             int value = pst.executeUpdate();
             if (value > 0){
-                message = "Quiz" + name + " was created successfully.";
+                message = "Quiz " + name + " was created successfully.";
                 System.out.println(message);
                 pst.close();
                 con.close();
@@ -230,11 +230,12 @@ public class DataBaseManager {
         boolean result = false;
         String sql = "INSERT INTO questions (`quizId`, `question`, `options`, `answer`) VALUES ( ?, ?, ?, ?);";
 
-        if(question !=null){
+        if(question ==null){
             System.out.println("Question equals null.");
             return  false;
         }
-        if(!question.options.contains(question.answer)){
+
+        if(!question.optionsArray.contains(question.answer)){
             System.out.println("Question not contains correct answer.");
             return  false;
         }
@@ -246,7 +247,7 @@ public class DataBaseManager {
 
             pst.setInt(1, question.quizId);
             pst.setString(2, question.question);
-            pst.setString(3, question.options);
+            pst.setString(3, question.getOptionsJson());
             pst.setString(4, question.answer);
 
             int value = pst.executeUpdate();
@@ -391,4 +392,69 @@ public class DataBaseManager {
     }
 
 
+    public static Quiz GetQuizData(int id) {
+        Quiz result = new Quiz();
+        String sql = "SELECT * FROM quizzes WHERE IsDeleted=false AND Id = ?";
+
+        try {
+            Connection  con = connection();
+            PreparedStatement pst=con.prepareStatement(sql);
+
+            pst.setInt(1, id);
+
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()){
+                result.ownerId = rs.getInt("OwnerId");
+                result.id = rs.getInt("Id");
+                result.name = rs.getString("Name");
+                result.details = rs.getString("Description");
+                System.out.println(result.id  + "|" + result.name  + "\t" + "- was selected");
+                result.questions = GetQuizQuestions(result.id);
+            }
+            pst.close();
+            con.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            return  result;
+        }
+    }
+
+    public static ArrayList<Question> GetQuizQuestions(int quizId) {
+        ArrayList<Question> questions = new ArrayList<>();
+        String sql = "SELECT * FROM questions WHERE quizId = ?";
+
+        try {
+            Connection  con = connection();
+            PreparedStatement pst=con.prepareStatement(sql);
+
+            pst.setInt(1, quizId);
+
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()){
+                Question temp = new Question();
+                temp.id = rs.getInt("Id");
+                temp.quizId =  rs.getInt("quizId");
+                temp.question =  rs.getString("question");
+                temp.options = rs.getString("options");
+                temp.answer = rs.getString("answer");
+
+                System.out.println( temp.id  + "|" + rs.getString("question")+ "|" +  rs.getString("answer") + "\t" + " for quiz["+  rs.getInt("quizId") +"]- was get from DB.");
+                questions.add(temp);
+            }
+            pst.close();
+            con.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            return  questions;
+        }
+    }
+
+    public static void updateQuizQuestions(Quiz quiz) {
+
+    }
 }
