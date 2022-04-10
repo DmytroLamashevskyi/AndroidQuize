@@ -34,11 +34,16 @@ public class MainActivity extends AppCompatActivity {
         Button clickButton = (Button) findViewById(R.id.SignInButton);
         EditText loginText = (EditText) findViewById(R.id.editTextPassword);
         EditText passwordText = (EditText) findViewById(R.id.editTextPassword);
+        TextView logText = (TextView ) findViewById(R.id.ErrorLoginText);
+
+        if(!DataBaseManager.isConnected()){
+            logText.setText("No connection to the DB.");
+        }
+
         clickButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                TextView logText = (TextView ) findViewById(R.id.ErrorLoginText);
 
                 User user = null;
                 if(DataBaseManager.isUserRegistered(loginText.getText().toString()))

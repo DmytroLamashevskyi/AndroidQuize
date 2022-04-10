@@ -24,7 +24,7 @@ public class DataBaseManager {
     private static final String LOG = "DEBUG";
     private static String classjdbcDriver = "net.sourceforge.jtds.jdbc.Driver";
 
-    private static String url = "jdbc:mysql://192.168.1.20/android_quiz";
+    private static String url = "jdbc:mysql://192.168.1.170/android_quiz?connectTimeout=10";
     private static String username = "java";
     private static String password = "password";
     String res = "";
@@ -35,6 +35,7 @@ public class DataBaseManager {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Driver loaded!");
+            DriverManager.setLoginTimeout(5);
             Connection connection = DriverManager.getConnection(url, username, password);
             System.out.println("Database connected!");
             return connection;
@@ -43,13 +44,30 @@ public class DataBaseManager {
         }
     }
 
+    public static boolean isConnected(){
+        try{
+            Connection con = connection();
+            String sql  = "SELECT 1";
+            PreparedStatement prest = con.prepareStatement(sql);
+            prest.setQueryTimeout(5);
+            ResultSet rs = prest.executeQuery();
+            if (rs.next()){
+                System.out.println("Connectrd succesfuly");
+            }
+            prest.close();
+            con.close();
+            return true;
+        }catch (Exception ex){
+            return false;
+        }
+    }
+
     public static User LogIn( String login, String password){
 
         try{
             Connection con = connection();
             User result = new User();
-            String sql;
-            sql  = "SELECT Id,Name FROM users WHERE Name =? And Password = ?";
+            String sql  = "SELECT Id,Name FROM users WHERE Name =? And Password = ?";
             PreparedStatement prest = con.prepareStatement(sql);
             prest.setString(1,login);
             prest.setString(2,password);
